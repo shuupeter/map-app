@@ -1,5 +1,17 @@
 <template>
 <div>
+<v-btn
+  color="primary"
+  elevation="5"
+  fab
+  small
+  @click.stop="dialog = true"
+>
+  <v-icon size="24px">
+  mdi-filter-variant
+  </v-icon>
+</v-btn>
+
   <v-footer
    padless
    dark
@@ -10,16 +22,18 @@
      no-gutters
     >
 
+    <router-link to="/">
      <v-btn
       rounded
       class="my-2"
-      @click.stop="dialog = true"
      >
      <v-icon size="24px">
-     mdi-filter-variant  
+     mdi-map-marker  
      </v-icon>
      </v-btn>
+     </router-link>
 
+    <router-link to="/mypage">
      <v-btn
       rounded
       class="my-2"
@@ -28,6 +42,7 @@
      mdi-account    
      </v-icon>
      </v-btn>
+    </router-link>
 
     </v-row>
   </v-footer>
@@ -185,10 +200,6 @@ export default {
     name:'AppNavigation',
 
     data: () => ({
-      icons: [
-        'mdi-filter-variant',
-        'mdi-account',
-      ],
       dialog: false,
   }),
 }
