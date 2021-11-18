@@ -1,14 +1,20 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
+import AppNavigation from '../components/AppNavigation.vue'
+import MyPage from '../views/MyPage.vue'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
+    path:'/',
+    name:'AppNavigation',
+    component:AppNavigation
+  },
+  {
+    path:'/mypage',
+    name:'MyPage',
+    component:MyPage
   },
   {
     path: '/about',

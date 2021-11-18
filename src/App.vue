@@ -12,8 +12,6 @@ import AppNavigation from "@/components/AppNavigation" ;
 import GoogleMap from "@/components/GoogleMap" ;
 import About from "./views/About" ;
 
-
-
 export default {
   name: 'App',
   components: {
@@ -21,6 +19,6 @@ export default {
     GoogleMap,
     About
   }
-  };
+};
 
 </script>

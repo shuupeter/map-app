@@ -1,71 +1,9 @@
 <template>
-<div>
-<v-btn
-  color="blue-grey"
-  class="white--text"
-  elevation="5"
-  fab
-  small
-  @click.stop="dialog = true"
->
-  <v-icon size="24px">
-  mdi-filter-variant
-  </v-icon>
-</v-btn>
+  <div>
 
-  <v-footer
-   padless
-   dark
-   fixed
-  >
-    <v-row
-     justify="space-around"
-     no-gutters
-    >
-
-    <ul>
-    <router-link tag="li" list-style="none"  to="/">
-     <v-btn
-      rounded
-      class="my-2"
-      elevation="0"
-      icon
-     >
-     <v-icon size="24px">
-     mdi-map-marker  
-     </v-icon>
-     </v-btn>
-     </router-link>
-     </ul>
-
-    <ul>
-    <router-link tag="li" to="/mypage">
-     <v-btn
-      rounded
-      class="my-2"
-      elevation="0"
-      icon
-     >
-     <v-icon size="24px">
-     mdi-account    
-     </v-icon>
-     </v-btn>
-    </router-link>
-    </ul>
-
-    </v-row>
-  </v-footer>
-
-     
-  <v-dialog
-      v-model="dialog"
-      max-width="600"
-  >
-
-  <v-container ma-0 pa-0>
      <v-card
      flat
-     tile
+     class="py-2"
      >
       <v-card-text>
       <v-row
@@ -78,6 +16,7 @@
             営業時間
           </p>
         </v-col>
+
         <v-btn-toggle
           v-model="toggle_exclusive1"
           mandatory
@@ -93,9 +32,9 @@
     </v-card-text>
   </v-card>
 
-    <v-card
+  <v-card
      flat
-     tile
+     class="py-2"
      >
       <v-card-text>
       <v-row
@@ -108,6 +47,7 @@
             お気に入り数
           </p>
         </v-col>
+
         <v-btn-toggle
           v-model="toggle_exclusive2"
           mandatory
@@ -134,10 +74,10 @@
       </v-row>
     </v-card-text>
   </v-card>
-  
+
   <v-card
      flat
-     tile
+     class="py-2"
      >
       <v-card-text>
       <v-row
@@ -150,6 +90,7 @@
             ユーザー購入数
           </p>
         </v-col>
+
         <v-btn-toggle
           v-model="toggle_exclusive3"
           mandatory
@@ -175,47 +116,21 @@
         </v-btn-toggle>
       </v-row>
     </v-card-text>
-  
-
-        <v-card-actions>
-          <v-spacer></v-spacer>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            キャンセル
-          </v-btn>
-
-          <v-btn
-            color="green darken-1"
-            text
-            @click="dialog = false"
-          >
-            保存
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-container>
-    </v-dialog>
+  </v-card>
 
 </div>
 </template>
 
-
 <script>
 export default {
-    name:'AppNavigation',
+    name:'FilterBotton',
 
-    data: () => ({
-      dialog: false,
-  }),
-}
+    data () {
+       return {
+        toggle_exclusive1: undefined,
+        toggle_exclusive2: undefined,
+        toggle_exclusive3: undefined,
+       }
+    },
+  }
 </script>
-
-<style scoped>
-ul {
-  list-style: none;
-}
-</style>
