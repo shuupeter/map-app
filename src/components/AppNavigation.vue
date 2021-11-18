@@ -1,7 +1,8 @@
 <template>
 <div>
 <v-btn
-  color="primary"
+  color="blue-grey"
+  class="white--text"
   elevation="5"
   fab
   small
@@ -22,27 +23,35 @@
      no-gutters
     >
 
-    <router-link to="/">
+    <ul>
+    <router-link tag="li" list-style="none"  to="/">
      <v-btn
       rounded
       class="my-2"
+      elevation="0"
+      icon
      >
      <v-icon size="24px">
      mdi-map-marker  
      </v-icon>
      </v-btn>
      </router-link>
+     </ul>
 
-    <router-link to="/mypage">
+    <ul>
+    <router-link tag="li" to="/mypage">
      <v-btn
       rounded
       class="my-2"
+      elevation="0"
+      icon
      >
      <v-icon size="24px">
      mdi-account    
      </v-icon>
      </v-btn>
     </router-link>
+    </ul>
 
     </v-row>
   </v-footer>
@@ -204,3 +213,9 @@ export default {
   }),
 }
 </script>
+
+<style scoped>
+ul {
+  list-style: none;
+}
+</style>
