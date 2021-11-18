@@ -37,7 +37,7 @@
                 flat
                 >
                     <v-img
-                    src="https://cdn.vuetifyjs.com/images/lists/ali.png"
+                    src="https://firebasestorage.googleapis.com/v0/b/neat-tangent-33111.appspot.com/o/スクリーンショット%202021-08-25%208.15.48（2）.png?alt=media&token=9823efb8-b1de-40b5-b72f-97b20f76c3e3"
                     height="250px"
                     >
                         <v-card-title>
