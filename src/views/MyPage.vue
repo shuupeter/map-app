@@ -37,7 +37,7 @@
                 flat
                 >
                     <v-img
-                    src="https://firebasestorage.googleapis.com/v0/b/neat-tangent-33111.appspot.com/o/スクリーンショット%202021-08-25%208.15.48（2）.png?alt=media&token=9823efb8-b1de-40b5-b72f-97b20f76c3e3"
+                    src="https://cdn.vuetifyjs.com/images/lists/ali.png"
                     height="250px"
                     >
                         <v-card-title>
@@ -153,6 +153,8 @@
             </v-sheet>
           </v-col>
         </v-row>
+        
+        <router-link tag="li" to="/itemregistration">
             <v-btn
                 color="blue-grey"
                 class="white--text"
@@ -163,6 +165,7 @@
                         mdi-plus
                     </v-icon>
             </v-btn>
+        </router-link>
       </v-container>
     </v-main>
     <v-footer
