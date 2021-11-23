@@ -5,7 +5,7 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import * as VueGoogleMaps from 'vue2-google-maps'
 import { firestorePlugin } from 'vuefire'
-
+import Croppa from 'vue-croppa'
 
 Vue.config.productionTip = false
 
@@ -20,6 +20,7 @@ Vue.use(VueGoogleMaps, {
 )
 
 Vue.use(firestorePlugin)
+Vue.use(Croppa)
 
 new Vue({
   router,
