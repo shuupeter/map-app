@@ -12,9 +12,13 @@
       dark
       flat
     >
+
+    <router-link to="/mypage">
       <v-btn icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
+    </router-link>
+
       <v-card-text class="text-h6 font-weight-bold text-center">
         アイテム登録
       </v-card-text>
@@ -36,7 +40,7 @@
     >
       <v-text-field
         v-model="name"
-        :rules="[required, limit_length]"
+        :rules="[rules.required,rules.length(25)]"
         filled
         color="deep-purple"
         counter="25"
@@ -46,25 +50,32 @@
       <v-combobox
         ref="shop"
         v-model="shop"
-        :rules="[required]"
+        :rules="[rules.required,rules.length(20)]"
         :items="shops"
         filled
         color="deep-purple"
+        counter="20"
         label="お店*"
+        placeholder="選択肢にない場合は直接入力してください"
       ></v-combobox>
       <v-combobox
         ref="brand"
         v-model="brand"
+        :rules="[rules.length(20)]"
         :items="brandShops"
         filled
         color="deep-purple"
+        counter="20"
         label="ブランド"
+        placeholder="選択肢にない場合は直接入力してください"
       ></v-combobox>
       <v-textarea
         v-model="introduction"
+        :rules="[rules.length(100)]"
         auto-grow
         filled
         color="deep-purple"
+        counter="100"
         label="紹介文"
         rows="2"
       ></v-textarea>
@@ -101,14 +112,9 @@
     shop:null,
     brandShops:['A','B'],
     brand:null,
-    agreement: false,
-    form: false,
-    isLoading: false,
     rules: {
-        length: len => v => (v || '').length >= len || `Invalid character length, required ${len}`,
-        password: v => !!(v || '').match(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*(_|[^\w])).+$/) ||
-          'Password must contain an upper case letter, a numeric character, and a special character',
-        required: v => !!v || 'This field is required',
+        length: len => v => (v || '').length <= len || `${len}文字以内で入力してください`,
+        required: v => !!v || '必須項目です',
       },
     }),
     computed: {
@@ -134,10 +140,14 @@
    justify-content: flex-end;
    margin-top: 25px;
    margin-bottom: 25px;
- }
+}
  
- .croppa-container:hover {
+.croppa-container:hover {
    opacity: 1;
    background-color: #BDBDBD;
- }
+}
+
+a {
+    text-decoration: none;
+}
 </style>

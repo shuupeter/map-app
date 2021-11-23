@@ -23,8 +23,7 @@
      no-gutters
     >
 
-    <ul>
-    <router-link tag="li" list-style="none"  to="/">
+    <router-link to="/">
      <v-btn
       rounded
       class="my-2"
@@ -36,10 +35,8 @@
      </v-icon>
      </v-btn>
      </router-link>
-     </ul>
 
-    <ul>
-    <router-link tag="li" to="/mypage">
+    <router-link to="/mypage">
      <v-btn
       rounded
       class="my-2"
@@ -51,7 +48,6 @@
      </v-icon>
      </v-btn>
     </router-link>
-    </ul>
 
     </v-row>
   </v-footer>
@@ -215,7 +211,7 @@ export default {
 </script>
 
 <style scoped>
-ul {
-  list-style: none;
+a {
+    text-decoration: none;
 }
 </style>
