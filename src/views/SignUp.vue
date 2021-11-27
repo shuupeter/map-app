@@ -7,7 +7,7 @@
   >
 
     <v-toolbar
-      color="indigo"
+      color="blue darken-1"
       cards
       dark
       flat
@@ -20,7 +20,7 @@
     </router-link>
 
       <v-card-text class="text-h6 font-weight-bold text-center">
-        アイテム登録
+        新規登録
       </v-card-text>
       <v-spacer></v-spacer>
       <v-btn text 
@@ -30,7 +30,7 @@
         color="white--text"
         @click="InputBox(e)"
       >
-        完了
+        登録する
       </v-btn>
     </v-toolbar>
 
@@ -41,65 +41,42 @@
     >
       <v-text-field
         v-model="name"
-        :rules="[rules.required,rules.length(25)]"
+        :rules="[rules.required]"
         filled
-        color="deep-purple"
-        counter="25"
-        label="買ったもの*"
+        color="blue darken-1"
+        label="ユーザー名*"
         style="min-height: 96px"
       ></v-text-field>
-      <v-combobox
-        ref="shop"
-        v-model="shop"
-        :rules="[rules.required,rules.length(20)]"
-        :items="shops"
+      <v-text-field
+        v-model="address"
+        :rules="[rules.required]"
         filled
-        color="deep-purple"
-        counter="20"
-        label="お店*"
-        placeholder="選択肢にない場合は直接入力してください"
+        color="blue darken-1"
+        label="メールアドレス*"
         style="min-height: 96px"
-      ></v-combobox>
-      <v-combobox
-        ref="brand"
-        v-model="brand"
-        :rules="[rules.length(20)]"
-        :items="brandShops"
+      ></v-text-field>
+      <v-text-field
+        ref="password"
+        v-model="password"
+        :rules="[rules.required,rules.length(6)]"
         filled
-        color="deep-purple"
-        counter="20"
-        label="ブランド"
-        placeholder="選択肢にない場合は直接入力してください"
+        color="blue darken-1"
+        counter="6"
+        label="パスワード*"
         style="min-height: 96px"
-      ></v-combobox>
-      <v-textarea
-        v-model="introduction"
-        :rules="[rules.length(100)]"
-        auto-grow
+        placeholder="6文字以上で入力してください"
+      ></v-text-field>
+      <v-text-field
+        ref="confirmationPassword"
+        v-model="confirmationPassword"
+        :rules="[rules.required,rules.length(6)]"
         filled
-        color="deep-purple"
-        counter="100"
-        label="紹介文"
-        rows="2"
-      ></v-textarea>
-      <croppa v-model="myCroppa"
-        accept="image/png, image/jpeg, image/bmp"
-        :width="250"
-        :height="250"
-        placeholder="画像登録*"
-        :placeholder-font-size="15"
-        placeholder-color="#616161"
-        canvas-color="transparent"
-        :disabled="false"
-        :prevent-white-space="true"
-        :show-remove-button="true"
-        remove-button-color="grey"
-        @file-size-exceed="handleCroppaFileSizeExceed"
-        @file-type-mismatch="handleCroppaFileTypeMismatch"
-        @image-remove="handleImageRemove"
-        @move="handleCroppaMove"
-        @zoom="handleCroppaZoom">  
-      </croppa > 
+        color="blue darken-1"
+        counter="6"
+        label="確認用パスワード*"
+        style="min-height: 96px"
+        placeholder="6文字以上で入力してください"
+      ></v-text-field>
     </v-form>
   </v-card>
 </v-container>
@@ -120,7 +97,7 @@
       brandShops:['A','B'],
       brand:null,
       rules: {
-          length: len => v => (v || '').length <= len || `${len}文字以内で入力してください`,
+          length: len => v => (v || '').length >= len || `${len}文字以上で入力してください`,
           required: v => !!v || '必須項目です',
         },
     }),
