@@ -4,7 +4,6 @@ import AppNavigation from '../components/AppNavigation.vue'
 import MyPage from '../views/MyPage.vue'
 import ItemRegistration from '../views/ItemRegistration.vue'
 
-
 Vue.use(VueRouter)
 
 const routes = [

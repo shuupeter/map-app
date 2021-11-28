@@ -1,5 +1,5 @@
 <template>
-  <v-app id="inspire">
+  <div>
     <v-app-bar
       app
       color="white"
@@ -9,6 +9,7 @@
         centered
         class="ml-n9"
         color="grey darken-1"
+        z-index:0
       >
         <v-tab
           v-for="link in links"
@@ -17,8 +18,17 @@
           {{ link }}
         </v-tab>
       </v-tabs>
+      <v-btn
+        text
+        color="grey darken-1"
+        class="px-1"
+        fixed top right
+        @click="signOut()"
+      >
+        ログアウト
+      </v-btn>
     </v-app-bar>
-
+      
     <v-main class="grey lighten-3">
       <v-container>
         <v-row>
@@ -166,10 +176,11 @@
                     </v-icon>
             </v-btn>
         </router-link>
-        
+
       </v-container>
     </v-main>
-    <v-footer
+    
+  <v-footer
    padless
    dark
    fixed
@@ -207,10 +218,13 @@
 
     </v-row>
   </v-footer>
-  </v-app>
+  </div>
 </template>
 
 <script>
+import app from '../plugins/db.js'
+import { getAuth , signOut , onAuthStateChanged } from "firebase/auth"
+
   export default {
     name:'MyPage',
     data: () => ({
@@ -221,6 +235,30 @@
       overlay: false,
       zIndex: 0,
     }),
+    methods: {
+      signOut() {
+        const auth = getAuth(app)
+        signOut(auth)
+        .then(() => {
+        // Sign-out successful.
+          alert('ログアウトしました。')
+        }).catch((error) => {
+        // An error happened.
+          console.error(error)
+      })
+      }
+    },
+    mounted(){
+    const auth = getAuth(app)
+    onAuthStateChanged(auth,function(user) {
+    if (user) {
+      const uid = user.uid
+      console.log(uid);
+    } else {
+      console.log('logout');
+    }
+    });     
+    }
   }
 </script>
 

@@ -8,7 +8,7 @@
   <v-form
       ref="form"
       class="pa-4 pt-6"
-      @submit.prevent="registerUser()"
+      @submit.prevent="signInUser()"
     >
 
     <v-toolbar
@@ -25,7 +25,7 @@
     </router-link>
 
       <v-card-text class="text-h6 font-weight-bold text-center">
-        新規登録
+        ログイン
       </v-card-text>
       <v-btn text 
         :disabled="!Checked"
@@ -33,20 +33,10 @@
         color="white--text"
         type="submit"
       >
-        登録する
+        ログインする
       </v-btn>
     </v-toolbar>
 
-    
-      <v-text-field
-        v-model="name"
-        :rules="[rules.required]"
-        filled
-        color="blue darken-1"
-        label="ユーザー名*"
-        style="min-height: 96px"
-        class="mt-10"
-      ></v-text-field>
       <v-text-field
         v-model="email"
         :rules="[rules.required]"
@@ -54,6 +44,7 @@
         color="blue darken-1"
         label="メールアドレス*"
         style="min-height: 96px"
+        class="mt-10"
       ></v-text-field>
       <v-text-field
         ref="password"
@@ -66,16 +57,6 @@
         style="min-height: 96px"
         placeholder="6文字以上で入力してください"
       ></v-text-field>
-      <v-text-field
-        ref="confirmationPassword"
-        v-model="confirmationPassword"
-        :rules="[rules.required,rules.length(6)]"
-        filled
-        color="blue darken-1"
-        counter="6"
-        label="確認用パスワード*"
-        placeholder="6文字以上で入力してください"
-      ></v-text-field>
     </v-form>
   </v-card>
 </v-container>
@@ -84,16 +65,14 @@
 
 <script>
 import app from '../plugins/db.js'
-import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged } from "firebase/auth"
+import { getAuth , onAuthStateChanged , signInWithEmailAndPassword } from "firebase/auth"
 //import { getAuth } from "firebase/auth"
 
   export default {
     name:'ItemRegistration',
     data: () => ({
-      name:'',
       email:'',
       password:'',
-      confirmationPassword:'',
       rules: {
           length: len => v => (v || '').length >= len || `${len}文字以上で入力してください`,
           required: v => !!v || '必須項目です',
@@ -101,15 +80,15 @@ import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged } from "f
     }),
     computed: {
       Checked() {
-        return this.name && this.email && this.password.length >= 6 && this.confirmationPassword.length >= 6;
+        return this.email && this.password.length >= 6 ;
       }
     },
     methods: {
-      registerUser() {
+      signInUser() {
         const auth = getAuth(app)
-        createUserWithEmailAndPassword(auth, this.email, this.password)
+        signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
-          console.log('user created')
+          console.log('user login')
           const user = userCredential.user;
           console.log(user);
         })

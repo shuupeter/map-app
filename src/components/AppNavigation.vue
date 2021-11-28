@@ -75,7 +75,6 @@
           </p>
         </v-col>
         <v-btn-toggle
-          v-model="toggle_exclusive1"
           mandatory
         >
           <v-btn>
@@ -105,7 +104,6 @@
           </p>
         </v-col>
         <v-btn-toggle
-          v-model="toggle_exclusive2"
           mandatory
         >
           <v-btn>
@@ -147,7 +145,6 @@
           </p>
         </v-col>
         <v-btn-toggle
-          v-model="toggle_exclusive3"
           mandatory
         >
           <v-btn>

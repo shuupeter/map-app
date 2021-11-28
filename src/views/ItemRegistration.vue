@@ -25,10 +25,8 @@
       <v-spacer></v-spacer>
       <v-btn text 
         :disabled="!Checked"
-        :loading="isLoading"
         class="font-weight-bold white--text"
         color="white--text"
-        @click="InputBox(e)"
       >
         完了
       </v-btn>
@@ -36,7 +34,6 @@
 
     <v-form
       ref="form"
-      v-model="form"
       class="pa-4 pt-6"
     >
       <v-text-field
@@ -47,6 +44,7 @@
         counter="25"
         label="買ったもの*"
         style="min-height: 96px"
+        class="mt-10"
       ></v-text-field>
       <v-combobox
         ref="shop"
@@ -73,7 +71,6 @@
         style="min-height: 96px"
       ></v-combobox>
       <v-textarea
-        v-model="introduction"
         :rules="[rules.length(100)]"
         auto-grow
         filled
@@ -82,7 +79,7 @@
         label="紹介文"
         rows="2"
       ></v-textarea>
-      <croppa v-model="myCroppa"
+      <croppa 
         accept="image/png, image/jpeg, image/bmp"
         :width="250"
         :height="250"
@@ -94,11 +91,7 @@
         :prevent-white-space="true"
         :show-remove-button="true"
         remove-button-color="grey"
-        @file-size-exceed="handleCroppaFileSizeExceed"
-        @file-type-mismatch="handleCroppaFileTypeMismatch"
-        @image-remove="handleImageRemove"
-        @move="handleCroppaMove"
-        @zoom="handleCroppaZoom">  
+        >  
       </croppa > 
     </v-form>
   </v-card>
@@ -128,11 +121,6 @@
       Checked() {
         return this.name && this.shop && this.myCroppa.generateDataUrl();
       },
-    methods:  {
-      InputBox(e) {
-        console.log(e);
-      }
-    }
     }
   }
 
@@ -156,11 +144,11 @@
 }
  
 .croppa-container:hover {
-   opacity: 1;
-   background-color: #BDBDBD;
+  opacity: 1;
+  background-color: #BDBDBD;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 </style>
