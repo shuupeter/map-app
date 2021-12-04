@@ -77,6 +77,17 @@
         placeholder="6文字以上で入力してください"
       ></v-text-field>
     </v-form>
+    <router-link to="/signin">
+    <v-card-actions>
+      <v-btn
+        color="blue accent-4"
+        class="mx-auto"
+        text
+      >
+        ログインページへ移動
+      </v-btn>
+    </v-card-actions>
+    </router-link>
   </v-card>
 </v-container>
 </template>
@@ -107,11 +118,14 @@ import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged } from "f
     methods: {
       registerUser() {
         const auth = getAuth(app)
-        createUserWithEmailAndPassword(auth, this.email, this.password)
+        createUserWithEmailAndPassword(auth, this.email, this.password , {returnSecureToken: true})
         .then((userCredential) => {
+        console.log(userCredential)
+          this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken)
+          this.$router.push('/mypage');
           console.log('user created')
-          const user = userCredential.user;
-          console.log(user);
+          this.email = "";
+          this.password = "";
         })
         .catch((error) => {
           alert(error.message)

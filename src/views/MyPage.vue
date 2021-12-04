@@ -179,7 +179,7 @@
 
       </v-container>
     </v-main>
-    
+
   <v-footer
    padless
    dark
@@ -242,6 +242,8 @@ import { getAuth , signOut , onAuthStateChanged } from "firebase/auth"
         .then(() => {
         // Sign-out successful.
           alert('ログアウトしました。')
+          this.$store.commit('updateIdToken', null);
+          this.$router.push('/');
         }).catch((error) => {
         // An error happened.
           console.error(error)

@@ -3,8 +3,10 @@ import VueRouter from 'vue-router'
 import AppNavigation from '../components/AppNavigation.vue'
 import MyPage from '../views/MyPage.vue'
 import ItemRegistration from '../views/ItemRegistration.vue'
+import store from '../store'
+import SignIn from '../views/SignIn.vue'
+import SignUp from '../views/SignUp.vue'
 
-Vue.use(VueRouter)
 
 const routes = [
   {
@@ -15,12 +17,49 @@ const routes = [
   {
     path:'/mypage',
     name:'MyPage',
-    component:MyPage
+    component:MyPage,
+    beforeEnter(to, from, next){
+      console.log(store.state.idToken)
+      console.log(store.getters.idToken)
+      if(store.getters.idToken){
+        next();
+      } else {
+        next("/signin");
+      }
+    },
   },
   {
     path:'/itemregistration',
     name:'ItemRegistration',
     component:ItemRegistration
+  },
+  {
+    path:'/signin',
+    name:'SignIn',
+    component:SignIn,
+    beforeEnter(to, from, next){
+      console.log(store.state.idToken)
+      console.log(store.getters.idToken)
+      if(store.getters.idToken){
+        next("/mypage");
+      } else {
+        next();
+      }
+    },
+  },
+  {
+    path:'/signup',
+    name:'SignUp',
+    component:SignUp,
+    beforeEnter(to, from, next){
+      console.log(store.state.idToken)
+      console.log(store.getters.idToken)
+      if(store.getters.idToken){
+        next("/mypage");
+      } else {
+        next();
+      }
+    },
   },
   {
     path: '/about',
@@ -32,10 +71,12 @@ const routes = [
   }
 ]
 
+Vue.use(VueRouter)
+
 const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
 })
 
-export default router
+export {router} ;

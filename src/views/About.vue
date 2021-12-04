@@ -5,8 +5,6 @@
       @click="login"
       elevation="2"
     >login</v-btn>
-    <SignUp />
-    <SignIn />
     <GetData />
     <ImageUpload />
   </div>
@@ -19,16 +17,12 @@ import { getAuth } from "firebase/auth"
 import { signInWithEmailAndPassword } from "firebase/auth";
 import GetData from "../components/GetData.vue"
 import ImageUpload from "../views/ImageUpload.vue"
-import SignUp from "../views/SignUp.vue"
-import SignIn from "./SignIn.vue"
 
 
 export default {
   components:{
     GetData,
     ImageUpload,
-    SignUp,
-    SignIn
   },
   methods: {
     login() {

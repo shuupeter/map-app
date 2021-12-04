@@ -1,5 +1,4 @@
 <template>
-
 <v-container>
   <v-card
     class="mx-auto"
@@ -58,6 +57,17 @@
         placeholder="6文字以上で入力してください"
       ></v-text-field>
     </v-form>
+    <router-link to="/signup">
+    <v-card-actions>
+      <v-btn
+        color="blue accent-4"
+        class="mx-auto"
+        text
+      >
+        新規登録
+      </v-btn>
+    </v-card-actions>
+    </router-link>
   </v-card>
 </v-container>
 </template>
@@ -66,7 +76,6 @@
 <script>
 import app from '../plugins/db.js'
 import { getAuth , onAuthStateChanged , signInWithEmailAndPassword } from "firebase/auth"
-//import { getAuth } from "firebase/auth"
 
   export default {
     name:'ItemRegistration',
@@ -88,9 +97,13 @@ import { getAuth , onAuthStateChanged , signInWithEmailAndPassword } from "fireb
         const auth = getAuth(app)
         signInWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
+          console.log(userCredential)
+          this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken); //追記
+          console.log(this.$store.state.idToken)
+          this.$router.push('/mypage');
           console.log('user login')
-          const user = userCredential.user;
-          console.log(user);
+          this.email = "";
+          this.password = "";
         })
         .catch((error) => {
           alert(error.message)
