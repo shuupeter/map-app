@@ -25,7 +25,6 @@
       <v-spacer></v-spacer>
       <v-btn text 
         :disabled="!Checked"
-        :loading="isLoading"
         class="font-weight-bold white--text"
         color="white--text"
       >
@@ -35,7 +34,6 @@
 
     <v-form
       ref="form"
-      v-model="form"
       class="pa-4 pt-6"
     >
       <v-text-field
@@ -46,6 +44,7 @@
         counter="25"
         label="買ったもの*"
         style="min-height: 96px"
+        class="mt-10"
       ></v-text-field>
       <v-combobox
         ref="shop"
@@ -54,9 +53,11 @@
         :items="shops"
         filled
         color="deep-purple"
-        label="お店*"
         counter="20"
-        placeholder="お店が見つからない場合は直接接入力してください"
+        label="お店*"
+        placeholder="選択肢にない場合は直接入力してください"
+        style="min-height: 96px"
+        counter="20"
         :placeholder-font-size="3"
       ></v-combobox>
       <v-combobox
@@ -66,11 +67,12 @@
         :items="brandShops"
         filled
         color="deep-purple"
-        label="ブランド"
         counter="20"
-        placeholder="ブランドが見つからない場合は直接接入力してください"
-        :placeholder-font-size="3"
+        label="ブランド"
+        placeholder="選択肢にない場合は直接入力してください"
+        style="min-height: 96px"
       ></v-combobox>
+    
       <v-textarea
         v-model="introduction"
         :rules="[rules.length(100)]"
@@ -78,6 +80,7 @@
         auto-grow
         filled
         color="deep-purple"
+        counter="100"
         label="紹介文"
         rows="2"
       ></v-textarea>
@@ -94,11 +97,7 @@
         :prevent-white-space="true"
         :show-remove-button="true"
         remove-button-color="grey"
-        @file-size-exceed="handleCroppaFileSizeExceed"
-        @file-type-mismatch="handleCroppaFileTypeMismatch"
-        @image-remove="handleImageRemove"
-        @move="handleCroppaMove"
-        @zoom="handleCroppaZoom">  
+        >  
       </croppa > 
     </v-form>
   </v-card>
@@ -107,28 +106,30 @@
 
 
 <script>
+// import { setDoc, doc } from "firebase/firestore";
+// import { ref, uploadString, getDownloadURL, getStorage  } from "firebase/storage";
+// import app from "./plugins/db.js";
+
   export default {
     name:'ItemRegistration',
     data: () => ({
-    name:null,
-    shops:['A店','B店'],
-    shop:null,
-    brandShops:['A','B'],
-    brand:null,
-    agreement: false,
-    form: false,
-    isLoading: false,
-    rules: {
-        length: len => v => (v || '').length <= len || `${len}文字以内で入力してください`,
-        required: v => !!v || '必須項目です',
-      },
+      name:null,
+      shops:['A店','B店'],
+      shop:null,
+      brandShops:['A','B'],
+      brand:null,
+      rules: {
+          length: len => v => (v || '').length <= len || `${len}文字以内で入力してください`,
+          required: v => !!v || '必須項目です',
+        },
     }),
     computed: {
-    Checked() {
-      return this.name && this.shop && this.myCroppa.generateDataUrl();
+      Checked() {
+        return this.name && this.shop && this.myCroppa.generateDataUrl();
+      },
     }
-  },
   }
+
 </script>
 
 
@@ -149,8 +150,8 @@
 }
  
 .croppa-container:hover {
-   opacity: 1;
-   background-color: #BDBDBD;
+  opacity: 1;
+  background-color: #BDBDBD;
 }
 
 a {

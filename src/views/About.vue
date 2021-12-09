@@ -6,6 +6,7 @@
       elevation="2"
     >login</v-btn>
     <GetData />
+    <ImageUpload />
   </div>
 </template>
 
@@ -15,10 +16,13 @@ import app from "../plugins/db"
 import { getAuth } from "firebase/auth"
 import { signInWithEmailAndPassword } from "firebase/auth";
 import GetData from "../components/GetData.vue"
+import ImageUpload from "../views/ImageUpload.vue"
+
 
 export default {
   components:{
-    GetData
+    GetData,
+    ImageUpload,
   },
   methods: {
     login() {

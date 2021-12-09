@@ -1,9 +1,9 @@
 <template>
-  <v-app>
+    <v-app>
     <router-view/>
     <About />
-    <GoogleMap></GoogleMap>
-  </v-app>
+    <GoogleMap />
+    </v-app>
 </template>
 
 <script>

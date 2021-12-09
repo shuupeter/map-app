@@ -1,9 +1,11 @@
 <template>
+<div>
     <ul>
         <li v-for="(shop) in shops" :key="shop.id">
             {{shop}}
         </li>
     </ul>
+</div>
 </template>
 
 <script>
