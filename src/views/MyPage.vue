@@ -267,6 +267,6 @@ import { getAuth , signOut , onAuthStateChanged } from "firebase/auth"
 
 <style scoped>
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 </style>

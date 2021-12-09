@@ -38,7 +38,7 @@
     >
       <v-text-field
         v-model="name"
-        :rules="[rules.required,rules.length(25)]"
+        :rules="[rules.required, rules.length(25)]"
         filled
         color="deep-purple"
         counter="25"
@@ -49,7 +49,7 @@
       <v-combobox
         ref="shop"
         v-model="shop"
-        :rules="[rules.required,rules.length(20)]"
+        :rules="[rules.required, rules.length(20)]"
         :items="shops"
         filled
         color="deep-purple"
@@ -57,6 +57,8 @@
         label="お店*"
         placeholder="選択肢にない場合は直接入力してください"
         style="min-height: 96px"
+        counter="20"
+        :placeholder-font-size="3"
       ></v-combobox>
       <v-combobox
         ref="brand"
@@ -70,8 +72,11 @@
         placeholder="選択肢にない場合は直接入力してください"
         style="min-height: 96px"
       ></v-combobox>
+    
       <v-textarea
+        v-model="introduction"
         :rules="[rules.length(100)]"
+        counter="100"
         auto-grow
         filled
         color="deep-purple"
@@ -79,7 +84,8 @@
         label="紹介文"
         rows="2"
       ></v-textarea>
-      <croppa 
+      <croppa v-model="myCroppa"
+        :rules="[rules.required]"
         accept="image/png, image/jpeg, image/bmp"
         :width="250"
         :height="250"
