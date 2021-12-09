@@ -93,10 +93,11 @@
 </template>
 
 
+
 <script>
 import app from '../plugins/db.js'
-import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged } from "firebase/auth"
-//import { getAuth } from "firebase/auth"
+import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged , updateProfile } from "firebase/auth"
+import { getFirestore, collection, addDoc } from "firebase/firestore";
 
   export default {
     name:'ItemRegistration',
@@ -118,31 +119,56 @@ import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged } from "f
     methods: {
       registerUser() {
         const auth = getAuth(app)
-        createUserWithEmailAndPassword(auth, this.email, this.password , {returnSecureToken: true})
+        createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
-        console.log(userCredential)
+          console.log(userCredential)
+          const user = userCredential.user;
           this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken)
+          this.$store.commit('setUserUid', user.uid)
+          console.log(this.$store.state.userUid)
           this.$router.push('/mypage');
           console.log('user created')
+          const uid = user.uid;
+          const userInitialData = {
+            email: this.email,
+            uid: uid,
+            username: this.name
+          }
+
+          const db = getFirestore(app)
+          addDoc (collection(db, "users"), userInitialData);
+
           this.email = "";
           this.password = "";
+          this.name = "";
+          this.confirmationPassword = "";
         })
         .catch((error) => {
           alert(error.message)
           console.error(error)
         })
-      }
+      },
     },
+
     mounted(){
-    const auth = getAuth(app)
-    onAuthStateChanged(auth,function(user) {
-    if (user) {
-      const uid = user.uid
-      console.log(uid);
-    } else {
-      console.log('logout');
-    }
+        const auth = getAuth(app)
+        onAuthStateChanged(auth,function(user) {
+        if (user) {
+        const uid = user.uid
+        console.log(uid);
+        } else {
+        console.log('logout');
+        }
     });     
+    },
+
+    updated(){
+        const auth = getAuth(app)
+        updateProfile(auth.currentUser, {
+            displayName : this.name
+        })
+        this.$store.commit('setUserName', auth.currentUser.displayName)
+        console.log(this.$store.state.userName)
     }
 }
 </script>

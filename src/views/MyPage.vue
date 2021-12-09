@@ -63,7 +63,8 @@
                     </v-img>
 
                          <v-card-title>
-                            Ali Conners
+                            <!-- Ali Conners -->
+                            {{ $store.state.userName }}
                          </v-card-title>
 
                     <v-list two-line>
@@ -251,15 +252,15 @@ import { getAuth , signOut , onAuthStateChanged } from "firebase/auth"
       }
     },
     mounted(){
-    const auth = getAuth(app)
-    onAuthStateChanged(auth,function(user) {
-    if (user) {
-      const uid = user.uid
-      console.log(uid);
-    } else {
-      console.log('logout');
-    }
-    });     
+      const auth = getAuth(app)
+      onAuthStateChanged(auth,function(user) {
+      if (user) {
+        const uid = user.uid
+        console.log(uid);
+      } else {
+        console.log('logout');
+      }
+      })
     }
   }
 </script>
