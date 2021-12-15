@@ -104,10 +104,13 @@ import { getFirestore } from "firebase/firestore";
           // this.email = "";
           // this.password = "";
           const db = getFirestore(app)
-          db.collection("users").where("uid", "==", userCredential).get().then((querySnapshot)=>{
-          querySnapshot.forEach((s) => {
-            this.users.push([s.id, s.data()]);
-            });
+          db.collection("users").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+          //オブジェクトを取得
+          console.log(doc.data());
+          //フィールドを取得
+          console.log(doc.get("uid"));
+          });
           });
           // .where('uid', '==', 'userCredential.user.uid').select('uid').get();
           // let usersArray = [] ;
@@ -122,7 +125,6 @@ import { getFirestore } from "firebase/firestore";
           // })
           // this.$store.commit('setUserName', data)
           this.$router.push('/mypage');
-          console.log(this.users)
           })
           .catch((error) => {
           alert(error.message)
