@@ -76,7 +76,7 @@
 <script>
 import app from '../plugins/db.js'
 import { getAuth , signInWithEmailAndPassword } from "firebase/auth"
-import { getFirestore } from "firebase/firestore";
+import { collection, getDocs, getFirestore, query, where } from "firebase/firestore";
 
   export default {
     name:'ItemRegistration',
@@ -104,26 +104,13 @@ import { getFirestore } from "firebase/firestore";
           // this.email = "";
           // this.password = "";
           const db = getFirestore(app)
-          db.collection("users").get().then((querySnapshot) => {
+          const q = query(collection(db, "users"), where("uid", "==", userCredential.user.uid));
+          const querySnapshot = await getDocs(q);
           querySnapshot.forEach((doc) => {
-          //オブジェクトを取得
-          console.log(doc.data());
-          //フィールドを取得
-          console.log(doc.get("uid"));
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            this.$store.commit('setUserName', doc.data().username);
           });
-          });
-          // .where('uid', '==', 'userCredential.user.uid').select('uid').get();
-          // let usersArray = [] ;
-          // let dataValue ;
-          // sampleColRef.onSnapshot((snapshot)=> {
-          //   usersArray = [] ;
-          //   snapshot.forEach((doc)=> {
-          //     dataValue = doc.data();
-          //     key: doc.id,
-          //     value: dataValue
-          //   })
-          // })
-          // this.$store.commit('setUserName', data)
           this.$router.push('/mypage');
           })
           .catch((error) => {
@@ -134,7 +121,6 @@ import { getFirestore } from "firebase/firestore";
     },
               // this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken)
               // this.$store.commit('setUserUid', user.uid)
-              // this.$store.commit('setUserName', username)
   }
 </script>
 
