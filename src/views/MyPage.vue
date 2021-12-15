@@ -9,7 +9,6 @@
         centered
         class="ml-n9"
         color="grey darken-1"
-        z-index:0
       >
         <v-tab
           v-for="link in links"
@@ -18,6 +17,7 @@
           {{ link }}
         </v-tab>
       </v-tabs>
+
       <v-btn
         text
         color="grey darken-1"
@@ -123,61 +123,60 @@
                     cols="4"
                     >
                     <v-img
-                        :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                        :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                        aspect-ratio="1"
-                        class="grey lighten-2"
-                        @click="overlay = !overlay"
+                      :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                      :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                      aspect-ratio="1"
+                      class="grey lighten-2"
+                      @click="overlay = !overlay"
                     >
                         <template v-slot:placeholder>
                         <v-row
-                            class="fill-height ma-0"
-                            align="center"
-                            justify="center"
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
                         >
-                            <v-progress-circular
+                          <v-progress-circular
                             indeterminate
                             color="grey lighten-5"
-                            ></v-progress-circular>
+                          ></v-progress-circular>
                         </v-row>
                         </template>
                     </v-img>
                 
                     <v-overlay
-                        :z-index="zIndex"
-                        :value="overlay"
+                      :z-index="zIndex"
+                      :value="overlay"
                     >
-                        <v-img
-                            :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
-                            :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
-                            aspect-ratio="1"
-                            width="300px"
-                            max-height="auto"
-                            class="grey lighten-2"
-                            @click="overlay = !overlay"
-                        >
-                        </v-img>
+                      <v-img
+                        :src="`https://picsum.photos/500/300?image=${n * 5 + 10}`"
+                        :lazy-src="`https://picsum.photos/10/6?image=${n * 5 + 10}`"
+                        aspect-ratio="1"
+                        width="300px"
+                        max-height="auto"
+                        class="grey lighten-2"
+                        @click="overlay = !overlay"
+                      >
+                      </v-img>
                     </v-overlay>
-                    </v-col>
+                  </v-col>
                 </v-row>
-                </template>
+              </template>
             </v-sheet>
           </v-col>
         </v-row>
         
         <router-link to="/itemregistration">
             <v-btn
-                color="blue-grey"
-                class="white--text"
-                fab
-                fixed bottom right
-                >
-                    <v-icon dark>
-                        mdi-plus
-                    </v-icon>
+              color="blue-grey"
+              class="white--text"
+              fab
+              fixed bottom right
+              >
+                <v-icon dark>
+                  mdi-plus
+                </v-icon>
             </v-btn>
         </router-link>
-
       </v-container>
     </v-main>
 
@@ -199,7 +198,7 @@
       icon
      >
      <v-icon size="24px">
-     mdi-map-marker  
+      mdi-map-marker  
      </v-icon>
      </v-btn>
      </router-link>
@@ -212,7 +211,7 @@
       icon
      >
      <v-icon size="24px">
-     mdi-account    
+      mdi-account    
      </v-icon>
      </v-btn>
     </router-link>
@@ -241,12 +240,12 @@ import { getAuth , signOut , onAuthStateChanged } from "firebase/auth"
         const auth = getAuth(app)
         signOut(auth)
         .then(() => {
-        // Sign-out successful.
           alert('ログアウトしました。')
           this.$store.commit('updateIdToken', null);
+          this.$store.commit('setUserUid', null);
+          this.$store.commit('setUserName', null);
           this.$router.push('/');
         }).catch((error) => {
-        // An error happened.
           console.error(error)
       })
       }
@@ -266,7 +265,7 @@ import { getAuth , signOut , onAuthStateChanged } from "firebase/auth"
 </script>
 
 <style scoped>
-a {
-  text-decoration: none;
-}
+  a {
+    text-decoration: none;
+  }
 </style>

@@ -44,7 +44,7 @@
         counter="25"
         label="買ったもの*"
         style="min-height: 96px"
-        class="mt-10"
+        class="mt-8"
       ></v-text-field>
       <v-combobox
         ref="shop"
@@ -57,8 +57,6 @@
         label="お店*"
         placeholder="選択肢にない場合は直接入力してください"
         style="min-height: 96px"
-        counter="20"
-        :placeholder-font-size="3"
       ></v-combobox>
       <v-combobox
         ref="brand"
@@ -80,7 +78,6 @@
         auto-grow
         filled
         color="deep-purple"
-        counter="100"
         label="紹介文"
         rows="2"
       ></v-textarea>

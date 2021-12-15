@@ -1,14 +1,13 @@
 <template>
-
 <v-container>
   <v-card
     class="mx-auto"
     style="max-width: 500px;"
   >
   <v-form
-      ref="form"
-      class="pa-4 pt-6"
-      @submit.prevent="registerUser()"
+    ref="form"
+    class="pa-4 pt-6"
+    @submit.prevent="registerUser()"
     >
 
     <v-toolbar
@@ -18,7 +17,7 @@
       flat
     >
 
-    <router-link to="/mypage">
+    <router-link to="/">
       <v-btn icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -37,7 +36,6 @@
       </v-btn>
     </v-toolbar>
 
-    
       <v-text-field
         v-model="name"
         :rules="[rules.required]"
@@ -58,23 +56,23 @@
       <v-text-field
         ref="password"
         v-model="password"
-        :rules="[rules.required,rules.length(6)]"
+        :rules="[rules.required,rules.length(7)]"
         filled
         color="blue darken-1"
-        counter="6"
+        counter="7"
         label="パスワード*"
         style="min-height: 96px"
-        placeholder="6文字以上で入力してください"
+        placeholder="7文字以上で入力してください"
       ></v-text-field>
       <v-text-field
         ref="confirmationPassword"
         v-model="confirmationPassword"
-        :rules="[rules.required,rules.length(6)]"
+        :rules="[rules.required,rules.length(7)]"
         filled
         color="blue darken-1"
-        counter="6"
+        counter="7"
         label="確認用パスワード*"
-        placeholder="6文字以上で入力してください"
+        placeholder="7文字以上で入力してください"
       ></v-text-field>
     </v-form>
     <router-link to="/signin">
@@ -96,7 +94,7 @@
 
 <script>
 import app from '../plugins/db.js'
-import { getAuth , createUserWithEmailAndPassword , onAuthStateChanged , updateProfile } from "firebase/auth"
+import { getAuth , createUserWithEmailAndPassword } from "firebase/auth"
 import { getFirestore, collection, addDoc } from "firebase/firestore";
 
   export default {
@@ -121,55 +119,47 @@ import { getFirestore, collection, addDoc } from "firebase/firestore";
         const auth = getAuth(app)
         createUserWithEmailAndPassword(auth, this.email, this.password)
         .then((userCredential) => {
-          console.log(userCredential)
           const user = userCredential.user;
           this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken)
           this.$store.commit('setUserUid', user.uid)
-          console.log(this.$store.state.userUid)
-          this.$router.push('/mypage');
-          console.log('user created')
-          const uid = user.uid;
+          this.$store.commit('setUserName', this.name)
           const userInitialData = {
             email: this.email,
-            uid: uid,
+            uid: user.uid,
             username: this.name
           }
-
           const db = getFirestore(app)
-          addDoc (collection(db, "users"), userInitialData);
-
-          this.email = "";
-          this.password = "";
-          this.name = "";
-          this.confirmationPassword = "";
-        })
+          addDoc(collection(db,"users"), userInitialData);
+          })
+          .then(()=>{
+          this.$router.push('/mypage');
+          })
         .catch((error) => {
           alert(error.message)
           console.error(error)
         })
       },
     },
+    // mounted(){
+    //   const auth = getAuth(app)
+    //   onAuthStateChanged(auth,function(user) {
+    //   if (user) {
+    //     const uid = user.uid
+    //     console.log(uid);
+    //   } else {
+    //     console.log('logout');
+    //   }
+    // });     
+    // },
 
-    mounted(){
-        const auth = getAuth(app)
-        onAuthStateChanged(auth,function(user) {
-        if (user) {
-        const uid = user.uid
-        console.log(uid);
-        } else {
-        console.log('logout');
-        }
-    });     
-    },
-
-    updated(){
-        const auth = getAuth(app)
-        updateProfile(auth.currentUser, {
-            displayName : this.name
-        })
-        this.$store.commit('setUserName', auth.currentUser.displayName)
-        console.log(this.$store.state.userName)
-    }
+    // updated(){
+    //     const auth = getAuth(app)
+    //     updateProfile(auth.currentUser, {
+    //         displayName : this.name
+    //     })
+    //     this.$store.commit('setUserName', auth.currentUser.displayName)
+    //     console.log(this.$store.state.userName)
+    // }
 }
 </script>
 

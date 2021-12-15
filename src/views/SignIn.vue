@@ -17,7 +17,7 @@
       flat
     >
 
-    <router-link to="/mypage">
+    <router-link to="/">
       <v-btn icon>
         <v-icon>mdi-arrow-left</v-icon>
       </v-btn>
@@ -48,13 +48,13 @@
       <v-text-field
         ref="password"
         v-model="password"
-        :rules="[rules.required,rules.length(6)]"
+        :rules="[rules.required,rules.length(7)]"
         filled
         color="blue darken-1"
-        counter="6"
+        counter="7"
         label="パスワード*"
         style="min-height: 96px"
-        placeholder="6文字以上で入力してください"
+        placeholder="7文字以上で入力してください"
       ></v-text-field>
     </v-form>
     <router-link to="/signup">
@@ -75,13 +75,15 @@
 
 <script>
 import app from '../plugins/db.js'
-import { getAuth , onAuthStateChanged , signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth , signInWithEmailAndPassword } from "firebase/auth"
+import { getFirestore } from "firebase/firestore";
 
   export default {
     name:'ItemRegistration',
     data: () => ({
       email:'',
       password:'',
+      users:[],
       rules: {
           length: len => v => (v || '').length >= len || `${len}文字以上で入力してください`,
           required: v => !!v || '必須項目です',
@@ -96,33 +98,42 @@ import { getAuth , onAuthStateChanged , signInWithEmailAndPassword } from "fireb
       signInUser() {
         const auth = getAuth(app)
         signInWithEmailAndPassword(auth, this.email, this.password)
-        .then((userCredential) => {
+        .then(async(userCredential) => {
           console.log(userCredential)
-          this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken); //追記
-          console.log(this.$store.state.idToken)
+          this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken);
+          // this.email = "";
+          // this.password = "";
+          const db = getFirestore(app)
+          db.collection("users").where("uid", "==", userCredential).get().then((querySnapshot)=>{
+          querySnapshot.forEach((s) => {
+            this.users.push([s.id, s.data()]);
+            });
+          });
+          // .where('uid', '==', 'userCredential.user.uid').select('uid').get();
+          // let usersArray = [] ;
+          // let dataValue ;
+          // sampleColRef.onSnapshot((snapshot)=> {
+          //   usersArray = [] ;
+          //   snapshot.forEach((doc)=> {
+          //     dataValue = doc.data();
+          //     key: doc.id,
+          //     value: dataValue
+          //   })
+          // })
+          // this.$store.commit('setUserName', data)
           this.$router.push('/mypage');
-          console.log('user login')
-          this.email = "";
-          this.password = "";
-        })
-        .catch((error) => {
+          console.log(this.users)
+          })
+          .catch((error) => {
           alert(error.message)
           console.error(error)
         })
       }
     },
-    mounted(){
-    const auth = getAuth(app)
-    onAuthStateChanged(auth,function(user) {
-    if (user) {
-      const uid = user.uid
-      console.log(uid);
-    } else {
-      console.log('logout');
-    }
-    });     
-    }
-}
+              // this.$store.commit('updateIdToken', userCredential._tokenResponse.idToken)
+              // this.$store.commit('setUserUid', user.uid)
+              // this.$store.commit('setUserName', username)
+  }
 </script>
 
 
@@ -143,11 +154,11 @@ import { getAuth , onAuthStateChanged , signInWithEmailAndPassword } from "fireb
 }
  
 .croppa-container:hover {
-   opacity: 1;
-   background-color: #BDBDBD;
+  opacity: 1;
+  background-color: #BDBDBD;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 </style>
