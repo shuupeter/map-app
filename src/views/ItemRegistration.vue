@@ -108,7 +108,8 @@
 // import { setDoc, doc } from "firebase/firestore";
 // import { ref, uploadString, getDownloadURL, getStorage  } from "firebase/storage";
 import app from "../plugins/db.js";
-import { getStorage, ref as sRef, uploadBytesResumable } from "firebase/storage";
+import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import store from '../store'
 // getDownloadURL
 
   export default {
@@ -135,13 +136,21 @@ import { getStorage, ref as sRef, uploadBytesResumable } from "firebase/storage"
     methods: {
       handleUploadImage() {
         const storage = getStorage(app)
-        const storageRef = sRef(storage, `files/${this.shop}/${this.item}`);
-        this.myCroppa.generateBlob((blob) => {
-          const uploadTask = uploadBytesResumable(storageRef, blob)
+        const storageRef = sRef(storage, `files/${this.$store.state.userUid}/${this.shop}/${this.item}`);
+        this.myCroppa.generateBlob(async (blob) => {
+          const uploadTask = await uploadBytesResumable(storageRef, blob)
           console.log(blob)
           console.log(uploadTask)
-        });
-          // .then((snapshot) => {
+          console.log(store.state.userUid)
+          console.log(this.myCroppa)
+          getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          console.log('ダウンロードしたURL' + downloadURL);
+          })
+          })
+      },
+    }
+    }
+         // .then((snapshot) => {
             // アップが完了したら、ダウンロードURLを取得して、
             // UserプロパティのphotoURLに書き込みます。
             // const photoURL = snapshot.downloadURL
@@ -150,8 +159,8 @@ import { getStorage, ref as sRef, uploadBytesResumable } from "firebase/storage"
       // const storageRef = sRef(storage, `files/${file.name}`);
       // const uploadTask = uploadBytesResumable(storageRef, url)
       // this.myCroppa.generateBlob((blob)=> {
-      console.log(this.myCroppa)
-      }
+  
+
         // e.preventDefault();
         // let file = e.target[0].files[0]
         // this.uploadImage(file)
@@ -207,8 +216,6 @@ import { getStorage, ref as sRef, uploadBytesResumable } from "firebase/storage"
           //   .catch(function (error) {
           //       console.log("error", error);
           //   })
-    }
-  }
 </script>
 
 

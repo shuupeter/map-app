@@ -110,6 +110,7 @@ import { collection, getDocs, getFirestore, query, where } from "firebase/firest
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
             this.$store.commit('setUserName', doc.data().username);
+            this.$store.commit('setUserUid', doc.data().uid);
           });
           this.$router.push('/mypage');
           })
