@@ -7,7 +7,9 @@ export default new Vuex.Store({
   state: {
     idToken: null,
     userUid: null,
-    userName: null
+    userName: null,
+    imageURL: null,
+    uploadFile: null,
   }, 
   // actions: {
   //   login() {
@@ -30,7 +32,10 @@ export default new Vuex.Store({
   getters: {
     idToken: state => state.idToken,
     userUid: state => state.userUid,
-    userName: state => state.userName
+    imageURL: state => state.imageURL,
+    userName: state => state.userName,
+    // imageURL: state => state.imageURL,
+    uploadFile: state => state.uploadFile,
   },
   mutations: {
     updateIdToken(state, idToken) { 
@@ -41,6 +46,36 @@ export default new Vuex.Store({
     },
     setUserName(state, userName) { 
       state.userName = userName;
-    }
-  }
+    },
+    // upload (state){
+    //     //Firebase Store上での画像URL
+    //     state.imageURL = 'tmp/' + state.uploadFile.name
+    //     //アップロード
+    //     const storageRef = firebase.storage().ref().child(state.imageURL);
+    //     storageRef.put(state.uploadFile).then(function (snapshot) {
+    //         console.log('Uploaded a blob or file!');
+    //         console.log(snapshot)
+    //     });
+    // },
+    // initialize (state) {
+    //   state.imageURL = null;
+    //   state.uploadFile = null;
+    // },
+  },
+  // actions: {
+    //mutation : uploadへ
+    // selectFile: function ({ commit }, e) {
+    //     e.preventDefault();
+    //     let files = e.target.files;
+    //     commit('uploadFile', files[0])
+    // },
+
+
+  //   upload: function ({ commit }) {
+  //       commit('upload')
+  //   },
+  //   initialize: function({ commit }){
+  //       commit('initialize')
+  //   }
+  // }
 })

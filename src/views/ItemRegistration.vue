@@ -5,6 +5,11 @@
     class="mx-auto"
     style="max-width: 500px;"
   >
+    <v-form
+      ref="form"
+      class="pa-4 pt-6"
+      @submit.prevent="handleUploadImage()"
+    >
 
     <v-toolbar
       color="indigo"
@@ -27,17 +32,14 @@
         :disabled="!Checked"
         class="font-weight-bold white--text"
         color="white--text"
+        type="submit"
       >
         完了
       </v-btn>
     </v-toolbar>
 
-    <v-form
-      ref="form"
-      class="pa-4 pt-6"
-    >
       <v-text-field
-        v-model="name"
+        v-model="item"
         :rules="[rules.required, rules.length(25)]"
         filled
         color="deep-purple"
@@ -72,7 +74,7 @@
       ></v-combobox>
     
       <v-textarea
-        v-model="introduction"
+        v-model="comment"
         :rules="[rules.length(100)]"
         counter="100"
         auto-grow
@@ -105,16 +107,21 @@
 <script>
 // import { setDoc, doc } from "firebase/firestore";
 // import { ref, uploadString, getDownloadURL, getStorage  } from "firebase/storage";
-// import app from "./plugins/db.js";
+import app from "../plugins/db.js";
+import { getStorage, ref as sRef, uploadBytesResumable } from "firebase/storage";
+// getDownloadURL
 
   export default {
     name:'ItemRegistration',
     data: () => ({
-      name:null,
+      item:null,
       shops:['A店','B店'],
       shop:null,
       brandShops:['A','B'],
       brand:null,
+      comment:null,
+      myCroppa:{},
+      // dataUrl:"",
       rules: {
           length: len => v => (v || '').length <= len || `${len}文字以内で入力してください`,
           required: v => !!v || '必須項目です',
@@ -122,11 +129,86 @@
     }),
     computed: {
       Checked() {
-        return this.name && this.shop && this.myCroppa.generateDataUrl();
+        return this.item && this.shop && this.myCroppa.generateDataUrl();
       },
+    },
+    methods: {
+      handleUploadImage() {
+        const storage = getStorage(app)
+        const storageRef = sRef(storage, `files/${this.shop}/${this.item}`);
+        this.myCroppa.generateBlob((blob) => {
+          const uploadTask = uploadBytesResumable(storageRef, blob)
+          console.log(blob)
+          console.log(uploadTask)
+        });
+          // .then((snapshot) => {
+            // アップが完了したら、ダウンロードURLを取得して、
+            // UserプロパティのphotoURLに書き込みます。
+            // const photoURL = snapshot.downloadURL
+      // const url = this.myCroppa.generateDataUrl();
+      // const storage = getStorage(app)
+      // const storageRef = sRef(storage, `files/${file.name}`);
+      // const uploadTask = uploadBytesResumable(storageRef, url)
+      // this.myCroppa.generateBlob((blob)=> {
+      console.log(this.myCroppa)
+      }
+        // e.preventDefault();
+        // let file = e.target[0].files[0]
+        // this.uploadImage(file)
+  
+      // uploadImage(file) {
+      // if (!file) return
+
+      // const uploadTask = uploadBytesResumable(storageRef, file)
+      // uploadTask.on('state_changed',(snapshot) => {
+      //   // Observe state change events such as progress, pause, and resume
+      //   // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+      //   const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      //   console.log('Upload is ' + progress + '% done');
+      //   switch (snapshot.state) {
+      //       case 'paused':
+      //           console.log('Upload is paused');
+      //           break;
+      //       case 'running':
+      //           console.log('Upload is running');
+      //           break;
+      //   }
+      //   },
+      //   (error) => {
+      //       console.log(error)
+      //   },
+      //   () => {
+      //       // Handle successful uploads on complete
+      //       // For instance, get the download URL: https://firebasestorage.googleapis.com/...
+      //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+      //           console.log('File available at', downloadURL);
+      //       });
+      //   }
+      // );
+      // }
+          // this.$store.dispatch('upload')
+          // this.moment = moment().format('YYYY-MM-DD')
+          // console.log(this);
+          // db.collection('comments').add({
+          //     item: this.item,
+          //     shop: this.shop,
+          //     brand: this.brand,
+          //     comment: this.comment,
+          //     moment: this.moment,
+          //     //stores/modules/comments.jsのimageURLを取得
+          //     imageURl: this.$store.getters.imageURL
+          //   })
+          //   .then(function (docRef){
+          //       console.log(this);
+          //       console.log("Document written with ID: ", docRef.id);
+          //       this.$store.dispatch('initialize');
+
+          //   })
+          //   .catch(function (error) {
+          //       console.log("error", error);
+          //   })
     }
   }
-
 </script>
 
 
