@@ -10,14 +10,14 @@ import SignUp from '../views/SignUp.vue'
 
 const routes = [
   {
-    path:'/',
-    name:'AppNavigation',
-    component:AppNavigation
+    path: '/',
+    name: 'AppNavigation',
+    component: AppNavigation
   },
   {
-    path:'/mypage',
-    name:'MyPage',
-    component:MyPage,
+    path: '/mypage',
+    name: 'MyPage',
+    component: MyPage,
     beforeEnter(to, from, next){
       console.log(store.state.idToken)
       console.log(store.getters.idToken)
@@ -29,14 +29,14 @@ const routes = [
     },
   },
   {
-    path:'/itemregistration',
-    name:'ItemRegistration',
-    component:ItemRegistration
+    path: '/itemregistration',
+    name: 'ItemRegistration',
+    component: ItemRegistration
   },
   {
-    path:'/signin',
-    name:'SignIn',
-    component:SignIn,
+    path: '/signin',
+    name: 'SignIn',
+    component: SignIn,
     beforeEnter(to, from, next){
       console.log(store.state.idToken)
       console.log(store.getters.idToken)
@@ -48,9 +48,9 @@ const routes = [
     },
   },
   {
-    path:'/signup',
-    name:'SignUp',
-    component:SignUp,
+    path: '/signup',
+    name: 'SignUp',
+    component: SignUp,
     beforeEnter(to, from, next){
       console.log(store.state.idToken)
       console.log(store.getters.idToken)

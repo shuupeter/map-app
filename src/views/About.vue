@@ -14,7 +14,7 @@
 import app from "../plugins/db"
 // import { getFireStore } from "firebase/firestore"
 import { getAuth } from "firebase/auth"
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth"
 import GetData from "../components/GetData.vue"
 import ImageUpload from "../views/ImageUpload.vue"
 

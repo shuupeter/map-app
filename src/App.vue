@@ -1,20 +1,19 @@
 <template>
     <v-app>
     <router-view/>
-    <About />
-    <GoogleMap />
+    <!-- <About />
+    <GoogleMap /> -->
     </v-app>
 </template>
 
 <script>
-import GoogleMap from "@/components/GoogleMap" ;
-import About from "./views/About" ;
+// import GoogleMap from "@/components/GoogleMap" ;
+// import About from "./views/About" ;
 
-export default {
-  components: {
-    GoogleMap,
-    About
-  }
-};
-
+// export default {
+//   components: {
+//     GoogleMap,
+//     About
+//   }
+// };
 </script>

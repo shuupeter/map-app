@@ -8,27 +8,10 @@ export default new Vuex.Store({
     idToken: null,
     userUid: null,
     userName: null,
-    imageURL: null,
+    // imageURL: null,
     uploadFile: null,
+    docId: null,
   }, 
-  // actions: {
-  //   login() {
-  //      login({ commit }) {
-  //         console.log('login action')
-  //         const provider = new firebase.auth.GoogleAuthProvider();
-  //         firebase.auth().signInWithPopup(provider).then(function(result) {
-  //          const user = result.user;
-  //          console.log('success : ' + user)
-  //          console.log('success : ' + user.uid + ' : ' + user.displayName)
-  //          commit('setUserUid', user.uid)
-  //          commit('setUserName', user.displayName)
-  //         }).catch(function(error) {
-  //           var errorCode = error.code;
-  //           console.log('error : ' + errorCode)
-  //         });
-  //       }
-  //     }
-  // },
   getters: {
     idToken: state => state.idToken,
     userUid: state => state.userUid,
@@ -36,6 +19,7 @@ export default new Vuex.Store({
     userName: state => state.userName,
     // imageURL: state => state.imageURL,
     uploadFile: state => state.uploadFile,
+    docId: state => state.docId,
   },
   mutations: {
     updateIdToken(state, idToken) { 
@@ -47,35 +31,11 @@ export default new Vuex.Store({
     setUserName(state, userName) { 
       state.userName = userName;
     },
-    // upload (state){
-    //     //Firebase Store上での画像URL
-    //     state.imageURL = 'tmp/' + state.uploadFile.name
-    //     //アップロード
-    //     const storageRef = firebase.storage().ref().child(state.imageURL);
-    //     storageRef.put(state.uploadFile).then(function (snapshot) {
-    //         console.log('Uploaded a blob or file!');
-    //         console.log(snapshot)
-    //     });
-    // },
-    // initialize (state) {
-    //   state.imageURL = null;
-    //   state.uploadFile = null;
-    // },
+    setdocId(state, docId) { 
+      state.docId = docId;
+    },
+    uploadFile(state, uploadFile) { 
+      state.uploadFile = uploadFile;
+    },
   },
-  // actions: {
-    //mutation : uploadへ
-    // selectFile: function ({ commit }, e) {
-    //     e.preventDefault();
-    //     let files = e.target.files;
-    //     commit('uploadFile', files[0])
-    // },
-
-
-  //   upload: function ({ commit }) {
-  //       commit('upload')
-  //   },
-  //   initialize: function({ commit }){
-  //       commit('initialize')
-  //   }
-  // }
 })
