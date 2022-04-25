@@ -88,7 +88,7 @@ export default {
   }),
   computed: {
     Checked() {
-      return this.email && this.password.length >= 6 ;
+      return this.email && this.password.length >= 7 ;
     }
   },
   methods: {
